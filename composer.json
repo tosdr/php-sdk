@@ -1,0 +1,20 @@
+{
+    "name": "tosdr/php",
+    "description": "ToS;DR API SDK",
+    "type": "library",
+    "license": "GPL2",
+    "autoload": {
+        "psr-4": {
+            "tosdr\\": "src/tosdr/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Justin Back",
+            "email": "justin@tosdr.org"
+        }
+    ],
+    "require": {
+        "nesbot/carbon": "^2.68"
+    }
+}
