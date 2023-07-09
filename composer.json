@@ -2,7 +2,7 @@
     "name": "tosdr/php",
     "description": "ToS;DR API SDK",
     "type": "library",
-    "license": "GPL2",
+    "license": "GPL-3.0-or-later",
     "autoload": {
         "psr-4": {
             "tosdr\\": "src/tosdr/"
