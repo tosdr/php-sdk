@@ -4,6 +4,8 @@ namespace tosdr\api\model;
 
 use Carbon\Carbon;
 
+
+
 class Service {
     
     public function __construct(
@@ -63,4 +65,17 @@ class Service {
     public function getPoints(): array {
         return $this->points;
     }
+
+    public function getShieldUrl(string $locale = "en", string $extension = "svg"): string {
+        return \tosdr\LinkFactory::shields($this->id, $locale, $extension);
+    }
+
+    public function getPhoenixUrl(): string {
+        return \tosdr\LinkFactory::phoenix($this->id, PhoenixTypes::SERVICES);
+    }
+
+    public function getCrispUrl(string $locale = "en"): string {
+        return \tosdr\LinkFactory::crisp($this->id, $locale);
+    }
+
 }

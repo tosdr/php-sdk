@@ -5,6 +5,9 @@ namespace tosdr;
 class Client {
     
     public const BASE_URL = 'https://api.tosdr.org';
+    public const PHOENIX_BASE_URL = 'https://edit.tosdr.org';
+    public const CRISP_BASE_URL = 'https://tosdr.org';
+    public const SHIELDS_BASE_URL = 'https://shields.tosdr.org';
 
     public static function GET(string $url, array $params = [], int &$httpCode = null): array {
         $curl = curl_init();
