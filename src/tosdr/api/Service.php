@@ -12,8 +12,46 @@ class Service {
     public const VERSION = "v2";
 
 
+    /**
+     * List all services
+     *
+     * @param integer $page
+     * @return ServiceList
+     */
+    public static function list(int $page = 1): ServiceList {
 
-    public static function get(int $serviceID){
+        $Result = tosdr\Client::GET(sprintf("%s/%s/%s", tosdr\Client::BASE_URL, self::INTERFACE, self::VERSION), ["page" => $page], $httpCode);
+
+        if($httpCode === 404 || ($Result["error"] & 0x10000)){
+            throw new exceptions\NotFoundException(sprintf("Page Parameter %s is invalid", $page));
+        }
+
+        $services = [];
+
+
+        foreach($Result["parameters"]["services"] as $service){
+            $services[] = new model\ServiceMinimal(
+                $service["id"],
+                $service["is_comprehensively_reviewed"],
+                $service["name"],
+                $service["urls"],
+                Carbon::parse($service["created_at"]),
+                empty($service["updated_at"]) ? Carbon::parse($service["updated_at"]) : null,
+                empty($service["slug"]) ? $service["slug"] : null,
+                empty($service["rating"]) ? $service["rating"] : null
+            );
+        }
+
+        return new ServiceList($services, $Result["parameters"]["_page"]);
+    }
+
+    /**
+     * Get a service by its ID
+     *
+     * @param integer $serviceID
+     * @return Service
+     */
+    public static function get(int $serviceID): Service {
 
         $Result = tosdr\Client::GET(sprintf("%s/%s/%s", tosdr\Client::BASE_URL, self::INTERFACE, self::VERSION), [
             'id' => $serviceID
